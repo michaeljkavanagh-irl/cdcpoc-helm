@@ -1,0 +1,4 @@
+replicaCount: 2
+image:
+  repository: ghcr.io/michaeljkavanagh-irl/cdcpoc-connect
+  tag: dev1
