@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.nameOverride }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.nameOverride }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.nameOverride }}
+    spec:
+      containers:
+        - name: kafka
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 9092
+            - containerPort: 9093
+          env:
+            - name: KAFKA_NODE_ID
+              value: {{ .Values.env.KAFKA_NODE_ID | quote }}
+            - name: KAFKA_PROCESS_ROLES
+              value: {{ .Values.env.KAFKA_PROCESS_ROLES | quote }}
+            - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
+              value: {{ .Values.env.KAFKA_LISTENER_SECURITY_PROTOCOL_MAP | quote }}
+            - name: KAFKA_LISTENERS
+              value: {{ .Values.env.KAFKA_LISTENERS | quote }}
+            - name: KAFKA_ADVERTISED_LISTENERS
+              value: {{ .Values.env.KAFKA_ADVERTISED_LISTENERS | quote }}
+            - name: KAFKA_INTER_BROKER_LISTENER_NAME
+              value: {{ .Values.env.KAFKA_INTER_BROKER_LISTENER_NAME | quote }}
+            - name: KAFKA_CONTROLLER_LISTENER_NAMES
+              value: {{ .Values.env.KAFKA_CONTROLLER_LISTENER_NAMES | quote }}
+            - name: KAFKA_CONTROLLER_QUORUM_VOTERS
+              value: {{ .Values.env.KAFKA_CONTROLLER_QUORUM_VOTERS | quote }}
+            - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+              value: {{ .Values.env.KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR | quote }}
+            - name: KAFKA_TRANSACTION_STATE_LOG_MIN_ISR
+              value: {{ .Values.env.KAFKA_TRANSACTION_STATE_LOG_MIN_ISR | quote }}
+            - name: KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR
+              value: {{ .Values.env.KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR | quote }}
+            - name: KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS
+              value: {{ .Values.env.KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS | quote }}
+            - name: KAFKA_AUTO_CREATE_TOPICS_ENABLE
+              value: {{ .Values.env.KAFKA_AUTO_CREATE_TOPICS_ENABLE | quote }}
+            - name: CLUSTER_ID
+              value: {{ .Values.env.CLUSTER_ID | quote }}

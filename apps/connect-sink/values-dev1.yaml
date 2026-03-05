@@ -1,4 +1,4 @@
 replicaCount: 2
 image:
-  repository: ghcr.io/michaeljkavanagh-irl/cdcpoc-connect
-  tag: dev1
+  repository: vanillaflow-kafka-connect
+  tag: latest
