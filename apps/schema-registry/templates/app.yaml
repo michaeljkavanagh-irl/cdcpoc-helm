@@ -13,6 +13,7 @@ spec:
       labels:
         app: {{ .Values.nameOverride }}
     spec:
+      enableServiceLinks: false
       containers:
         - name: schema-registry
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

@@ -13,6 +13,7 @@ spec:
       labels:
         app: {{ .Values.nameOverride }}
     spec:
+      enableServiceLinks: false
       containers:
         - name: kafka
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -21,7 +22,7 @@ spec:
             - /bin/bash
             - -c
           args:
-            - unset PORT; /etc/confluent/docker/run
+            - unset PORT KAFKA_PORT; /etc/confluent/docker/run
           ports:
             - containerPort: 9092
             - containerPort: 9093
