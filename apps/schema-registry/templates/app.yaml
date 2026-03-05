@@ -17,6 +17,11 @@ spec:
         - name: schema-registry
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - /bin/bash
+            - -c
+          args:
+            - unset PORT; /etc/confluent/docker/run
           ports:
             - containerPort: {{ .Values.service.port }}
           env:
