@@ -10,3 +10,6 @@ spec:
     - name: kafka
       port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.port }}
+    - name: controller
+      port: {{ .Values.service.controllerPort }}
+      targetPort: {{ .Values.service.controllerPort }}
