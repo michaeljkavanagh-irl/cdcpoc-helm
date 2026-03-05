@@ -37,6 +37,8 @@ spec:
               value: {{ .Values.env.KAFKA_CONTROLLER_LISTENER_NAMES | quote }}
             - name: KAFKA_CONTROLLER_QUORUM_VOTERS
               value: {{ .Values.env.KAFKA_CONTROLLER_QUORUM_VOTERS | quote }}
+            - name: KAFKA_LOG_DIRS
+              value: {{ .Values.env.KAFKA_LOG_DIRS | quote }}
             - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
               value: {{ .Values.env.KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR | quote }}
             - name: KAFKA_TRANSACTION_STATE_LOG_MIN_ISR

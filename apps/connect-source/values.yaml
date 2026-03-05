@@ -9,10 +9,16 @@ service:
   port: 8083
 env:
   CONNECT_GROUP_ID: connect-source-group
+  CONNECT_REST_ADVERTISED_HOST_NAME: connect-source
   CONNECT_CONFIG_STORAGE_TOPIC: connect-source-configs
+  CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: "1"
   CONNECT_OFFSET_STORAGE_TOPIC: connect-source-offsets
+  CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
   CONNECT_STATUS_STORAGE_TOPIC: connect-source-status
+  CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
   CONNECT_BOOTSTRAP_SERVERS: kafka:9092
   CONNECT_REST_PORT: "8083"
+  CONNECT_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+  CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
   CONNECT_PLUGIN_PATH: /usr/share/java,/usr/share/confluent-hub-components
 resources: {}
