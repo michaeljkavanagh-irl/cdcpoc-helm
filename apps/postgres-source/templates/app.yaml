@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.nameOverride }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.nameOverride }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.nameOverride }}
+    spec:
+      containers:
+        - name: postgres
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          env:
+            - name: POSTGRES_USER
+              value: {{ .Values.env.POSTGRES_USER | quote }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.env.POSTGRES_PASSWORD | quote }}
+            - name: POSTGRES_DB
+              value: {{ .Values.env.POSTGRES_DB | quote }}
+          args:
+            - postgres
+            - -c
+            - wal_level={{ .Values.postgresConfig.wal_level }}
+            - -c
+            - max_wal_senders={{ .Values.postgresConfig.max_wal_senders }}
+            - -c
+            - max_replication_slots={{ .Values.postgresConfig.max_replication_slots }}
+{{- if .Values.persistence.enabled }}
+          volumeMounts:
+            - name: pgdata
+              mountPath: /var/lib/postgresql/data
+{{- end }}
+{{- if .Values.persistence.enabled }}
+      volumes:
+        - name: pgdata
+          persistentVolumeClaim:
+            claimName: {{ .Values.nameOverride }}-pvc
+{{- end }}

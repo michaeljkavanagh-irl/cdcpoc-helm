@@ -1,0 +1,21 @@
+nameOverride: postgres-source
+namespace: data-platform
+replicaCount: 1
+image:
+  repository: postgres
+  tag: "15-alpine"
+  pullPolicy: IfNotPresent
+service:
+  port: 5432
+env:
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_DB: northwind
+postgresConfig:
+  wal_level: logical
+  max_wal_senders: "10"
+  max_replication_slots: "10"
+persistence:
+  enabled: false
+  size: 5Gi
+resources: {}
